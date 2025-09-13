@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'gestion/public/sass/style.css' %}">
+    <link rel="stylesheet" href="{% static 'gestion/public/fontawesome-free-5.15.4-web/css/all.min.css' %}">
+    <title> {% block title %} {% endblock %} </title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <div class="heading">
+                    {% if user.is_authenticated %}
+                        <h3>{{user.username}}</h3>
+                    {% endif %}
+                </div>
+                <div class="navlink">
+                    <a href="{% url 'dashboard' %} " class="nav-item">
+                        <i class="fa fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                    <a href=" {% url 'abonnement' %} " class="nav-item">
+                        <i class="fa fa-calendar-check"></i>
+                        Abonnements
+                    </a>
+                    <a href="{% url 'listForfait' %}" class="nav-item">
+                        <i class="fa fa-layer-group"></i>
+                        Forfaits
+                    </a>
+                    <a href="{% url 'listClient' %}" class="nav-item">
+                        <i class="fa fa-user-friends"></i>
+                        Clients
+                    </a>
+                    <a href="{% url 'logout' %}" class="nav-item">
+                        <i class="fa fa-sign-out-alt"></i>
+                        Deconnexion
+                    </a>
+                </div>
+            </nav>
+        </div>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+<script src="{% static 'gestion/public/js/script.js' %}"></script>
+<script src="{% static 'gestion/public/js/button.js' %}"></script>
+</html>

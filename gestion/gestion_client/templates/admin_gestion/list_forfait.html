@@ -1,0 +1,56 @@
+{% extends 'admin_gestion/base.html' %}
+{% block title %}Liste des Forfaits{%endblock%}
+{% block content %}
+<div class="content-table">
+        <div class="head">
+            <input type="text" name="" id="search" placeholder="Recherche....">
+            <div class="icon">
+                <i class="fa fa-bars" id="menu-btn"></i>
+            </div>
+        </div>
+        <div class="titre">
+            <h3>Liste des Forfaits</h3>
+            <a href="{% url 'forfait'%}" class="btn"><i class="fa fa-plus-circle"></i></a>
+        </div>
+        <div class="container">
+            <div class="table">
+                <table>
+                    <thead>
+                        <th>Nom Forfait</th>
+                        <th>Info sur le forfait</th>
+                        <th>Prix et Durée</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% for forfaits in  forfait %}
+                            <tr>
+                                <td>
+                                    {{forfaits.nom}}
+                                    <p style="color: gray; padding: .3rem 0; font-size: .8rem;">
+                                        Type : {{forfaits.type_forfait.type_forfait}}
+                                    </p>
+                                </td>
+                                <td> 
+                                    {{forfaits.data_mo}} Mo 
+                                    <p style="color: gray; padding: .3rem 0; font-size: .8rem;">
+                                        {{forfaits.minutes}} minute(s) d'appel avec {{forfaits.sms}} SMS
+                                    </p>
+                                </td>
+                                <td>
+                                     {{forfaits.prix}} Ariary
+                                     <p style="color: gray; padding: .3rem 0; font-size: .8rem;">
+                                        Durée : {{forfaits.duree_jours}} Jours
+                                    </p>
+                                </td>
+                                <td>
+                                    <a href="update/{{forfaits.id}}" style="color: gray;">Modifier</a>
+                                    <a href="delete/{{forfaits.id}}" style="color: gray;">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

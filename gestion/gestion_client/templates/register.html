@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'gestion/public/sass/style.css' %}">
+    <link rel="stylesheet" href="{% static 'gestion/public/fontawesome-free-5.15.4-web/css/all.min.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="register">
+        <div class="container">
+            <div class="heading">
+                <div class="fa fa-user"></div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, neque?</p>
+            </div>
+            <form action="" method="post">
+                <div class="input-form">
+                    <i class="fa fa-signature"></i>
+                    <input type="text" name="nom" id="" placeholder="Nom...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-user-circle"></i>
+                    <input type="text" name="prenom" id="" placeholder="Prénom...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" name="email" id="" placeholder="Adresse email...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-phone"></i>
+                    <input type="text" name="tel" id="" placeholder="Numero Téléphone...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-calendar-alt"></i>
+                    <input type="date" name="datenais" id="" placeholder="Date de naissance...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-id-card-alt"></i>
+                    <input type="text" name="cin" id="" placeholder="Numero CIN...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-key"></i>
+                    <input type="password" name="password" id="" placeholder="Mot de passe...">
+                </div>
+                <div class="input-form">
+                    <i class="fa fa-key"></i>
+                    <input type="password" name="conf_password" id="" placeholder="Confirmation Mot de passe...">
+                </div>
+                <div class="btn-form">
+                    <button type="submit">S'inscrire</button>
+                    <a href="{% url 'login' %}">Se connecter</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends 'admin_gestion/base.html' %}
+{% block title %}Forfaits{%endblock%}
+{% block content %}
+<div class="content-create">
+    <div class="titre">
+        <h3>Ajout Forfait</h3>
+        <div class="icon">
+            <i class="fa fa-bars" id="menu-btn"></i>
+        </div>
+    </div>
+    <div class="container">
+        <div class="table">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="input">
+                    <label for="Nom">Nom</label>
+                    <input type="text" name="nom" id="" value="{{forfait.nom}}">
+                </div>
+                <div class="input">
+                    <label for="data">Data(Mo)</label>
+                    <input type="number" name="data" id="" value="{{forfait.data_mo}}">
+                </div>
+                <div class="input">
+                    <label for="Appel">Durée d'appel</label>
+                    <input type="number" name="appel" id=""  value="{{forfait.minutes}}">
+                </div>
+                <div class="input">
+                    <label for="sms">Nombre SMS</label>
+                    <input type="number" name="sms" id=""  value="{{forfait.sms}}">
+                </div>
+                <div class="input">
+                    <label for="prix">Prix</label>
+                    <input type="number" name="prix" id=""  value="{{forfait.prix}}">
+                </div>
+                <div class="input">
+                    <label for="Duree">Durée</label>
+                    <input type="number" name="duree" id=""  value="{{forfait.duree_jours}}">
+                </div>
+                <div class="input">
+                    <label for="Nom">Type Forfait</label>
+                    <!-- <input type="text" name="" id=""> -->
+                     <select name="type" id="">
+                        <option value="">--- Type ---</option>
+                        {% for type in type_forfait %}
+                            <option value="{{type.id}}">{{type.type_forfait}} ({{type.desc_forfait}})</option>
+                        {% endfor %}
+                     </select>
+                </div>
+                <div class="input">
+                    <button type="submit"  style="cursor: pointer;">Enregistrer</button>
+                </div>
+                {% if messages %}
+                    {% for mess in messages%}
+                        <p style="padding: .7rem; display: flex; align-items: center; justify-content: center; color: red; background-color: rgba(255, 0, 0, 0.479); width: 100%; font-weight: bold; border-radius: 5px;">
+                            {{mess}}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
