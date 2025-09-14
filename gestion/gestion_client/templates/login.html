@@ -31,7 +31,11 @@
                 </div>
                 {% if messages %}
                     {% for mess in messages%}
-                        <p>{{mess}}</p>
+                        {% if mess.tags == "error"%}
+                            <p style="width: 100%; padding: 1rem; background-color: rgba(30, 255, 0, 0.39); color: rgb(0, 163, 55); border-radius: 5px;  font-weight: bold; text-align: center;">{{mess}}</p>
+                        {%else}
+                            <p>{{mess}}</p>
+                        {%endif%}
                     {% endfor %}
                 {% endif %}
             </form>

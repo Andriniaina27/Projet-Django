@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from datetime import date, datetime
+from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 import locale
 from .models import Forfait, TypeForfait, Client, Abonnement, User
 
@@ -40,9 +42,31 @@ def inscription(request):
             messages.error(request, "Veuillez remplir les champs vides")
             redirect('register')
         if password != conf_password:
-            messages.error(request, "Mot de passe ")
-            redirect('register')
-        # if User.objects.filter()
+            messages.error(request, "Les mots de passe ne correspondent pas.")
+            return redirect("register")
+
+        # Vérification si email déjà utilisé
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Cet email est déjà utilisé.")
+            return redirect("register")
+
+        user = User.objects.create_user(
+            username=nom,
+            first_name=prenom,
+            email=email,
+            password=make_password(password)
+        )
+
+        Client.objects.create(
+            user=user,
+            numero_tel=tel,
+            cin=cin,
+            date_naissance=datenais,
+            last_activity=timezone.now()
+        )
+
+        messages.success(request, "Inscription réussie ! Vous pouvez maintenant vous connecter.")
+        return redirect("login")
     return render(request, 'register.html')
 
 def deconnexion(request):
