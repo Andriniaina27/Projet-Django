@@ -21,7 +21,7 @@ def connexion(request):
             if user.is_superuser:
                 return redirect('dashboard')
             else:
-                pass
+                return redirect('home')
         else:
             messages.error(request, "Echec d'authentification")
     return render(request, 'login.html')
@@ -54,7 +54,7 @@ def inscription(request):
             username=nom,
             first_name=prenom,
             email=email,
-            password=make_password(password)
+            password=password
         )
 
         Client.objects.create(
@@ -80,9 +80,11 @@ def dashboard(request):
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
     countForfait = Forfait.objects.count()
+    countClient = Client.objects.count()
     context = {
         'date_now' : date_now,
         'countForfait' : countForfait,
+        'countClient' : countClient,
     }
     return render(request, 'admin_gestion/dashboard.html', context)
 
@@ -190,4 +192,10 @@ def list_client(request):
         'client': client
     }
     return render(request, 'admin_gestion/list_client.html', context)
+
+
+@never_cache
+@login_required(login_url='login')
+def home(request):
+    return render(request, "client/dashboard.html")
 # Create your views here.
