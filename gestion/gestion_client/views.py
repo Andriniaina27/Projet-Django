@@ -185,5 +185,9 @@ def updateForfait(request, id):
 @never_cache
 @login_required(login_url='login')
 def list_client(request):
-    return render(request, 'admin_gestion/list_client.html')
+    client = Client.objects.select_related('user')
+    context = {
+        'client': client
+    }
+    return render(request, 'admin_gestion/list_client.html', context)
 # Create your views here.

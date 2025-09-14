@@ -1,5 +1,5 @@
 {% extends 'admin_gestion/base.html' %}
-{% block title %}Abonnements{%endblock%}
+{% block title %}Liste des clients{%endblock%}
 {% block content %}
 <div class="content-table">
     <div class="head">
@@ -19,18 +19,27 @@
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Date</th>
-                    <th>Status</th>
+                    <th>Numero : </th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <!-- <img src="public/image/206836265.jpg" alt="" style="width: 50px; height: 50px;border-radius: 5px;"> -->
-                        </td>
-                        <td>Andriniaina</td>
-                        <td>Luca</td>
-                        <td>27/10/2004</td>
-                        <td>En ligne</td>
-                    </tr>
+                    {%for cl in client%}
+                        <tr>
+                            <td>
+                                {%if cl.photo%}
+                                    <img src="{{cl.photo}}" alt="" style="width: 50px; height: 50px;border-radius: 5px;">
+                                {%else%}
+                                    <i class="fa fa-user" style="font-size: 40px;"></i>
+                                {%endif%}
+                            </td>
+                            <td> {{cl.user.username}} </td>
+                            <td>{{cl.user.first_name}}</td>
+                            <td>{{cl.date_naissance}}</td>
+                            <td>
+                                Tel : {{cl.numero_tel}}
+                                <p style="color: gray; padding: .3rem 0; font-size: .8rem;"> CIN : {{cl.cin}} </p> 
+                            </td>
+                        </tr>
+                    {%endfor%}
                 </tbody>
             </table>
         </div>
