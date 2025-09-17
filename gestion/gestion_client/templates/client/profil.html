@@ -1,0 +1,43 @@
+{% extends 'client/base.html' %}
+{% block titre %}Accueil{%endblock%}
+{% block section %}
+<section class="profil">
+    <p class="p">Votre profil</p>
+    <div class="content-profil">
+        <div class="container">
+            <div class="table">
+                <form action="" method="post">
+                    <div class="profile-container">
+                        <img id="profilePreview" src="https://via.placeholder.com/150" alt="" class="profile-img">
+                        <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click();">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div class="input">
+                        <input type="text" name="" id="" placeholder="Nom...">
+                    </div>
+                    <div class="input">
+                        <input type="text" name="" id="" placeholder="Prénom...">
+                    </div>
+                    <div class="input">
+                        <input type="text" name="" id="" placeholder="Adresse email...">
+                    </div>
+                    <div class="input">
+                        <input type="text" name="" id="" placeholder="Numero Téléphone...">
+                    </div>
+                    <div class="input">
+                        <input type="date" name="" id="" placeholder="Date de naissance...">
+                    </div>
+                    <div class="input">
+                        <input type="text" name="" id="" placeholder="Numero CIN...">
+                    </div>                                          
+                    <div class="input">
+                        <button type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

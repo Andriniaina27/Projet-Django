@@ -16,6 +16,8 @@ urlpatterns = [
     path('forfait/', views.forfait, name='forfait'),
     path('home/', views.home, name='home'),
     path('list_client/', views.list_client, name='listClient'),
+    path('facture/', views.facture, name='facture'),
+    path('profil/', views.profil, name='profil'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,36 @@
+{% extends 'client/base.html' %}
+{% block titre %}Accueil{%endblock%}
+{% block section %}
+<section class="facture">
+    <p class="p">Vos factures</p>
+    <div class="content-facture">
+        <div class="head">
+            <input type="text" name="" id="search" placeholder="Recherche....">
+        </div>
+        <div class="container">
+            <div class="table">
+                <table>
+                    <thead>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="public/image/206836265.jpg" alt="" style="width: 50px; height: 50px;border-radius: 5px;">
+                            </td>
+                            <td>Andriniaina</td>
+                            <td>Luca</td>
+                            <td>27/10/2004</td>
+                            <td>En ligne</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

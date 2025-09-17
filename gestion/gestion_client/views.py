@@ -18,7 +18,7 @@ def connexion(request):
         user = authenticate(request, username = email, password = password)
         if user:
             login(request, user)
-            if user.is_superuser:
+            if user.is_superuser == True:
                 return redirect('dashboard')
             else:
                 return redirect('home')
@@ -197,5 +197,34 @@ def list_client(request):
 @never_cache
 @login_required(login_url='login')
 def home(request):
-    return render(request, "client/dashboard.html")
+    locale.setlocale(locale.LC_TIME, 'french')
+    now = date.today()
+    date_now = now.strftime('%A %d %B %Y')
+    context = {
+        'date_now' : date_now
+    }
+    return render(request, "client/dashboard.html", context)
+
+@never_cache
+@login_required(login_url='login')
+def facture(request):
+    locale.setlocale(locale.LC_TIME, 'french')
+    now = date.today()
+    date_now = now.strftime('%A %d %B %Y')
+    context = {
+        'date_now' : date_now
+    }
+    return render(request, "client/facture.html", context)
+
+@never_cache
+@login_required(login_url='login')
+def profil(request):
+    locale.setlocale(locale.LC_TIME, 'french')
+    now = date.today()
+    date_now = now.strftime('%A %d %B %Y')
+    context = {
+        'date_now' : date_now
+    }
+    return render(request, "client/profil.html", context)
+
 # Create your views here.

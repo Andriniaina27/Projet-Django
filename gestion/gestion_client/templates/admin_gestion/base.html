@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +13,7 @@
         <div class="sidebar" id="sidebar">
             <nav>
                 <div class="heading">
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated == user.is_superuser%}
                         <h3>{{user.username}}</h3>
                     {% endif %}
                 </div>

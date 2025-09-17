@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'gestion/public/sass/style.css' %}">
+    <link rel="stylesheet" href="{% static 'gestion/public/fontawesome-free-5.15.4-web/css/all.min.css' %}">
+    <title> {%block titre%} {%endblock%} </title>
+</head>
+<body>
+    <header>
+        <div class="logo"><p>Abonnement360</p></div>
+        <nav>
+            <div class="contenu">
+                <div class="nom">
+                    <!-- <img src="public/image/206836265.jpg" alt=""> -->
+                    <i class="fa fa-user"></i> 
+                    {% if user.is_authenticated%}
+                        <p>{{user.username}} {{user.first_name}}</p>
+                    {% endif %}
+                </div>
+                <div class="date"><p>{{date_now}}</p></div>
+            </div>
+            <div class="navlink" >
+                <div class="link" id="navlink">
+                    <a href="{%url 'home'%}" class="nav-item">Accueil</a>
+                    <a href="{%url 'facture'%}" class="nav-item">Vos facture</a>
+                    <a href="{%url 'profil'%}" class="nav-item">Profil</a>
+                    <a href="{%url 'logout'%}" class="nav-item">Se déconnecter</a>
+                </div>
+                <div class="fa fa-bars" id="menu-bar"></div>
+            </div>
+        </nav>
+    </header>
+    {%block section%}{%endblock%}
+</body>
+<script src="{% static 'gestion/public/js/script.js' %}"></script>
+<script src="{% static 'gestion/public/js/button.js' %}"></script>
+<script src="{% static 'gestion/public/js/toggle.js' %}"></script>
+<script src="{% static 'gestion/public/js/upload.js' %}"></script>
+</html>
