@@ -3,85 +3,45 @@
 {% block section %}
 <section>
     <p class="p">Recharge</p>
-    <div class="contenu">
-        <div class="heading">
-            <h3>Forfait Complet</h3>
-        </div>
-        <div class="card">
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
+    {% if messages %}
+        {% for message in messages%}
+            <p style="width: 100%; padding: 1rem; justify-content: center; align-items: center;background-color: rgba(3, 175, 41, 0.479);margin-bottom: .5rem;text-align: center;color: rgb(22, 104, 6); border-radius: 10px;">{{message}}</p>    
+        {% endfor %}
+    {% endif %}
+    {% for tp in type_forfait%}
+        <div class="contenu">
+            <div class="heading">
+                <h3>{{tp.type_forfait}}</h3>
             </div>
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
-            </div>
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="contenu">
-        <div class="heading">
-            <h3>Forfait Complet</h3>
-        </div>
-        <div class="card">
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
-            </div>
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
-            </div>
-            <div class="card-item">
-                <h4>Forfait Maxi</h4>
-                <div class="card-body">
-                    <p>Data : 30Mo</p>
-                    <p>Durée d'appel(s) : 30 minutes</p>
-                    <p>Nombre SMS : 30</p>
-                    <p>Validité : 2 jour(s)</p>
-                    <p>Prix : 1000 Ariary</p>
-                    <button type="submit">Acheter</button>
-                </div>
+            <div class="card">
+                
+                {% for f in forfait%}
+                    {% if f.type_forfait_id == tp.id%}
+                        <div class="card-item">
+                            <h4> {{f.nom}} </h4>
+                            <div class="card-body">
+                                <p>Data : {{f.data_mo}}</p>
+                                <p>Durée d'appel(s) : {{f.minutes}}</p>
+                                <p>Nombre SMS : {{f.sms}}</p>
+                                <p>Validité : {{f.duree_jours}} jour(s)</p>
+                                <p>Prix : 1{{f.prix}} Ariary</p>
+                                {%for cli in client%}
+                                    {%if cli.user_id == user.id%}
+                                    <form action="" method="post">
+                                        {%csrf_token%}
+                                        <input type="hidden" name="id_client" id="" value="{{cli.id}}" readonly>
+                                        <input type="hidden" name="id_forfait" id="" value="{{f.id}}" readonly>
+                                        <input type="hidden" name="duree" id="" value="{{f.duree_jours}}" readonly>
+                                        <button type="submit">Acheter</button>
+                                    </form>
+                                    {%endif%}
+                                {%endfor%}
+                            </div>
+                        </div>
+                    {% endif %}
+                {%endfor%}
             </div>
         </div>
-    </div>
+    {%endfor%}
 </section>
 {%endblock%}

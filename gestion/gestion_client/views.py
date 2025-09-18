@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 import locale
@@ -200,8 +200,28 @@ def home(request):
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
+    type_forfait = TypeForfait.objects.all()
+    forfait = Forfait.objects.all()
+    client = Client.objects.all()
+    if request.method == 'POST':
+        id_client = request.POST['id_client']
+        id_forfait = request.POST['id_forfait']
+        duree = request.POST['duree']
+        dure = int(duree)
+        if id_forfait:
+            aujourd_hui = date.today()
+            dateval = aujourd_hui + timedelta(days= dure)
+            res = dateval.strftime('%d/%m/%Y')
+            abonnement = Abonnement(date_debut=now, date_fin=dateval, est_actif = True, client_id = id_client, forfait_id = id_forfait)
+            abonnement.save()
+            messages.success(request, "Votre abonnement est bien effectué")
+            redirect('home')
+
     context = {
-        'date_now' : date_now
+        'date_now' : date_now,
+        'type_forfait' : type_forfait,
+        'forfait' : forfait,
+        'client' : client,
     }
     return render(request, "client/dashboard.html", context)
 
@@ -226,5 +246,22 @@ def profil(request):
         'date_now' : date_now
     }
     return render(request, "client/profil.html", context)
+
+
+
+# from django.shortcuts import render
+# from .models import Document
+
+# # def upload_file_text(request):
+# #     if request.method == "POST":
+# #         titre = request.POST.get("titre")              # champ texte
+# #         fichier = request.FILES.get("fichier")         # champ fichier
+
+# #         if titre and fichier:
+# #             doc = Document.objects.create(titre=titre, fichier=fichier)
+# #             return render(request, "upload.html", {"message": "Document enregistré avec succès !"})
+
+# #     return render(request, "upload.html")
+
 
 # Create your views here.
