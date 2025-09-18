@@ -238,6 +238,14 @@ section{
                                 color: rgb(150, 150, 150);
                             }
                         }
+                        tbody{
+                            tr{
+                                td{
+                                    padding: .3rem;
+                                    border-top: 1px solid rgb(150, 150, 150);
+                                }
+                            }
+                        }
                     }
                 }
         }

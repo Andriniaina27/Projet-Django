@@ -214,7 +214,7 @@ def home(request):
             res = dateval.strftime('%d/%m/%Y')
             abonnement = Abonnement(date_debut=now, date_fin=dateval, est_actif = True, client_id = id_client, forfait_id = id_forfait)
             abonnement.save()
-            messages.success(request, "Votre abonnement est bien effectué")
+            messages.success(request, "Votre compte a été rechargé. Abonnement360 vous remercie!")
             redirect('home')
 
     context = {
@@ -231,8 +231,10 @@ def facture(request):
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
+    abonnement = Abonnement.objects.select_related('forfait', 'forfait__type_forfait', 'client')
     context = {
-        'date_now' : date_now
+        'date_now' : date_now,
+        'abonnement' : abonnement,
     }
     return render(request, "client/facture.html", context)
 

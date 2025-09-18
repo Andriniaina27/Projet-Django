@@ -1,5 +1,5 @@
 {% extends 'client/base.html' %}
-{% block titre %}Accueil{%endblock%}
+{% block titre %}Facture{%endblock%}
 {% block section %}
 <section class="facture">
     <p class="p">Vos factures</p>
@@ -11,22 +11,29 @@
             <div class="table">
                 <table>
                     <thead>
-                        <th>Photo</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Date</th>
+                        <th>Abonnement N°</th>
+                        <th>Nom Forfait</th>
+                        <th>Prix</th>
+                        <th>Devise</th>
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <img src="public/image/206836265.jpg" alt="" style="width: 50px; height: 50px;border-radius: 5px;">
-                            </td>
-                            <td>Andriniaina</td>
-                            <td>Luca</td>
-                            <td>27/10/2004</td>
-                            <td>En ligne</td>
-                        </tr>
+                        {%for ab in abonnement%}
+                            {%if ab.client.user_id == user.id%}
+                            <tr>
+                                <td> {{ab.id}} </td>
+                                <td>
+                                    {{ab.forfait.nom}}
+                                    <p style="color: gray; padding: .3rem 0; font-size: .8rem;">
+                                        {{ab.forfait.type_forfait.type_forfait}}
+                                    </p>
+                                </td>
+                                <td>{{ab.forfait.prix}}</td>
+                                <td>Ariary</td>
+                                <td></td>
+                            </tr>
+                            {%endif%}
+                        {%endfor%}
                     </tbody>
                 </table>
             </div>

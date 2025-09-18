@@ -5,7 +5,7 @@
     <p class="p">Recharge</p>
     {% if messages %}
         {% for message in messages%}
-            <p style="width: 100%; padding: 1rem; justify-content: center; align-items: center;background-color: rgba(3, 175, 41, 0.479);margin-bottom: .5rem;text-align: center;color: rgb(22, 104, 6); border-radius: 10px;">{{message}}</p>    
+            <p style="width: 100%; padding: 1rem; justify-content: center; align-items: center;background-color: rgba(3, 175, 41, 0.479);margin-bottom: .5rem;text-align: center;color: rgb(22, 104, 6); border-radius: 10px;"> Mr/Mme {{user.username}} {{user.first_name}} {{message}}</p>    
         {% endfor %}
     {% endif %}
     {% for tp in type_forfait%}
