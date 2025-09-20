@@ -16,7 +16,7 @@
                 <div class="nom">
                     {% if user.is_authenticated%}
                         {%if user.id == photo.user_id%}
-                            {%if photo.photo%}
+                            {%if photo.photo.url%}
                                 <img src="{{photo.photo.url}}" alt="">
                             {%else%}
                                 <i class="fa fa-user"></i> 

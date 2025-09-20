@@ -100,11 +100,16 @@ def dashboard(request):
         "labels": labels,
         "valeurs": valeurs,
     }
+    if not request.user.is_superuser:
+        return redirect('home')
+    
     return render(request, 'admin_gestion/dashboard.html', context)
 
 @never_cache
 @login_required(login_url='login')
 def abonnement(request):
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/abonnement.html')
 
 @never_cache
@@ -138,6 +143,8 @@ def forfait(request):
     context = {
         'type_forfait' : type_forfait,
     }
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/forfait.html', context)
 @never_cache
 @login_required(login_url='login')
@@ -146,6 +153,8 @@ def listForfait(request):
     context = {
         'forfait' : forfait,
     }
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/list_forfait.html', context)
 
 @never_cache
@@ -155,6 +164,8 @@ def deleteForfait(request, id):
     if forfait:
         forfait.delete()
         return redirect('listForfait')
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/list_forfait.html')
 
 @never_cache
@@ -195,6 +206,8 @@ def updateForfait(request, id):
         forfait.type_forfait_id = type
         forfait.save()
         return redirect('listForfait')
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/modif_forfait.html', context)
 
 
@@ -205,6 +218,8 @@ def list_client(request):
     context = {
         'client': client
     }
+    if not request.user.is_superuser:
+        return redirect('home')
     return render(request, 'admin_gestion/list_client.html', context)
 
 
@@ -247,9 +262,11 @@ def facture(request):
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
     abonnement = Abonnement.objects.select_related('forfait', 'forfait__type_forfait', 'client')
+    aujourd_hui = timezone.now().date()
     context = {
         'date_now' : date_now,
         'abonnement' : abonnement,
+        'aujourd_hui' : aujourd_hui,
     }
     return render(request, "client/facture.html", context)
 

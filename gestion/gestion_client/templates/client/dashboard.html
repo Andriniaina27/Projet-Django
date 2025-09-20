@@ -24,7 +24,7 @@
                                 <p>Durée d'appel(s) : {{f.minutes}}</p>
                                 <p>Nombre SMS : {{f.sms}}</p>
                                 <p>Validité : {{f.duree_jours}} jour(s)</p>
-                                <p>Prix : 1{{f.prix}} Ariary</p>
+                                <p>Prix : {{f.prix}} Ariary</p>
                                 {%for cli in client%}
                                     {%if cli.user_id == user.id%}
                                     <form action="" method="post">
