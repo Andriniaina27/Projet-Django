@@ -11,6 +11,7 @@ import locale
 from .models import Forfait, TypeForfait, Client, Abonnement, User
 from django.db.models.functions import TruncMonth
 from django.db.models import Count
+from django.db.models import Sum, F
 
 
 def connexion(request):
@@ -92,6 +93,13 @@ def dashboard(request):
     )
     labels = [d["mois"].strftime("%B %Y") for d in data]  # ex: "Janvier 2025"
     valeurs = [d["total"] for d in data]
+    forfaits = Forfait.objects.annotate(
+        total_vente=Sum(F('abonnement__forfait__prix'))
+    )
+
+    total_general = Abonnement.objects.aggregate(
+        total=Sum(F('forfait__prix'))
+    )['total'] or 0
     context = {
         'date_now' : date_now,
         'countForfait' : countForfait,
@@ -99,6 +107,7 @@ def dashboard(request):
         'countAbonnement' : countAbonnement,
         "labels": labels,
         "valeurs": valeurs,
+        "total_general": total_general
     }
     if not request.user.is_superuser:
         return redirect('home')
@@ -108,9 +117,15 @@ def dashboard(request):
 @never_cache
 @login_required(login_url='login')
 def abonnement(request):
+    abonnement = Abonnement.objects.select_related('forfait', 'forfait__type_forfait', 'client', 'client__user')
+    aujourd_hui = timezone.now().date()
+    context = {
+        "abonnement" : abonnement,
+        "aujourd_hui" : aujourd_hui
+    }
     if not request.user.is_superuser:
         return redirect('home')
-    return render(request, 'admin_gestion/abonnement.html')
+    return render(request, 'admin_gestion/abonnement.html', context)
 
 @never_cache
 @login_required(login_url='login')
@@ -253,6 +268,8 @@ def home(request):
         'client' : client,
         'photo' : photo,
     }
+    if request.user.is_superuser:
+        return redirect('dashboard')
     return render(request, "client/dashboard.html", context)
 
 @never_cache
@@ -261,43 +278,58 @@ def facture(request):
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
+    client = Client.objects.all()
     abonnement = Abonnement.objects.select_related('forfait', 'forfait__type_forfait', 'client')
     aujourd_hui = timezone.now().date()
     context = {
         'date_now' : date_now,
         'abonnement' : abonnement,
         'aujourd_hui' : aujourd_hui,
+        'client' : client,
     }
+    if request.user.is_superuser:
+        return redirect('dashboard')
     return render(request, "client/facture.html", context)
 
 @never_cache
 @login_required(login_url='login')
 def profil(request, id):
-    cl = Client.objects.get(user_id=id)
+    clients = Client.objects.get(user_id=id)
+    client = Client.objects.all()
+    user = User.objects.get(id=id)
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
     context = {
         'date_now' : date_now,
-        'cl' : cl,
+        'cl' : clients,
+        'client' : client,
     }
+    if request.method == 'POST':
+        nom = request.POST['nom'].strip()
+        prenom = request.POST['prenom'].strip()
+        mail = request.POST['mail'].strip()
+        tel = request.POST['tel'].strip()
+        dateN = request.POST['date'].strip()
+        cin = request.POST['cin'].strip()
+        img = request.FILES.get('photo')
+
+        if not nom or not prenom or not mail or not tel or not dateN or not cin:
+            messages.error(request, "Veuillez remplir les champs vides")
+            return redirect('profil')
+        
+        user.username = nom
+        user.first_name = prenom
+        user.email = mail
+        clients.numero_tel = tel
+        clients.cin = cin
+        clients.date_naissance = dateN
+        clients.photo = img
+        user.save()
+        clients.save()
+        return redirect('home')
+    if request.user.is_superuser:
+        return redirect('dashboard')
     return render(request, "client/profil.html", context)
-
-
-
-# from django.shortcuts import render
-# from .models import Document
-
-# # def upload_file_text(request):
-# #     if request.method == "POST":
-# #         titre = request.POST.get("titre")              # champ texte
-# #         fichier = request.FILES.get("fichier")         # champ fichier
-
-# #         if titre and fichier:
-# #             doc = Document.objects.create(titre=titre, fichier=fichier)
-# #             return render(request, "upload.html", {"message": "Document enregistré avec succès !"})
-
-# #     return render(request, "upload.html")
-
 
 # Create your views here.

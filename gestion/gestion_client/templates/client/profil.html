@@ -6,35 +6,46 @@
     <div class="content-profil">
         <div class="container">
             <div class="table">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
                     <div class="profile-container">
-                        {%if user.id == cl.user_id%}
-                            <img src="{{cl.photo.url}}" alt="" class="profile-img">
-                        {%else%}
-                            <img id="profilePreview" src="" alt="" class="profile-img">
-                        {%endif%}
+                        {%for clin in client%}
+                            {%if user.id == clin.user_id%}
+                                {%if clin.photo%}
+                                    <img id="profilePreview" src="{{clin.photo.url}}" alt="" class="profile-img">
+                                {%else%}
+                                    <img id="profilePreview" src="" alt="" class="profile-img">
+                                {%endif%}
+                            {%endif%}
+                        {%endfor%}
                         <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click();">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" name="photo" id="fileInput" accept="image/*" onchange="previewImage(event)">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Nom..." value="{{user.username}}">
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" id="" placeholder="Nom..." value="{{user.username}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Prénom..." value="{{user.first_name}}">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" name="prenom" id="" placeholder="Prénom..." value="{{user.first_name}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Adresse email..."  value="{{user.email}}">
+                        <label for="mail">Adresse email</label>
+                        <input type="text" name="mail" id="" placeholder="Adresse email..."  value="{{user.email}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Numero Téléphone..." value="{{cl.numero_tel}}">
+                        <label for="tel">Numero téléphone</label>
+                        <input type="text" name="tel" id="" placeholder="Numero Téléphone..." value="{{cl.numero_tel}}">
                     </div>
                     <div class="input">
-                        <input type="date" name="" id="" placeholder="Date de naissance...">
+                        <label for="date">Date de naissance</label>
+                        <input type="date" name="date" id="" placeholder="Date de naissance...">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Numero CIN..." value="{{cl.cin}}">
+                        <label for="cin">Numero CIN</label>
+                        <input type="text" name="cin" id="" placeholder="Numero CIN..." value="{{cl.cin}}">
                     </div>                                          
                     <div class="input">
                         <button type="submit">Enregistrer</button>
