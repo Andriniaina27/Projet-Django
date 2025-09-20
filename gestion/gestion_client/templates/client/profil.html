@@ -8,29 +8,33 @@
             <div class="table">
                 <form action="" method="post">
                     <div class="profile-container">
-                        <img id="profilePreview" src="https://via.placeholder.com/150" alt="" class="profile-img">
+                        {%if user.id == cl.user_id%}
+                            <img src="{{cl.photo.url}}" alt="" class="profile-img">
+                        {%else%}
+                            <img id="profilePreview" src="" alt="" class="profile-img">
+                        {%endif%}
                         <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click();">
                             <i class="fa fa-plus"></i>
                         </button>
                         <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Nom...">
+                        <input type="text" name="" id="" placeholder="Nom..." value="{{user.username}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Prénom...">
+                        <input type="text" name="" id="" placeholder="Prénom..." value="{{user.first_name}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Adresse email...">
+                        <input type="text" name="" id="" placeholder="Adresse email..."  value="{{user.email}}">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Numero Téléphone...">
+                        <input type="text" name="" id="" placeholder="Numero Téléphone..." value="{{cl.numero_tel}}">
                     </div>
                     <div class="input">
                         <input type="date" name="" id="" placeholder="Date de naissance...">
                     </div>
                     <div class="input">
-                        <input type="text" name="" id="" placeholder="Numero CIN...">
+                        <input type="text" name="" id="" placeholder="Numero CIN..." value="{{cl.cin}}">
                     </div>                                          
                     <div class="input">
                         <button type="submit">Enregistrer</button>

@@ -197,6 +197,7 @@ def list_client(request):
 @never_cache
 @login_required(login_url='login')
 def home(request):
+    photo = Client.objects.all()
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
@@ -211,7 +212,6 @@ def home(request):
         if id_forfait:
             aujourd_hui = date.today()
             dateval = aujourd_hui + timedelta(days= dure)
-            res = dateval.strftime('%d/%m/%Y')
             abonnement = Abonnement(date_debut=now, date_fin=dateval, est_actif = True, client_id = id_client, forfait_id = id_forfait)
             abonnement.save()
             messages.success(request, "Votre compte a été rechargé. Abonnement360 vous remercie!")
@@ -222,6 +222,7 @@ def home(request):
         'type_forfait' : type_forfait,
         'forfait' : forfait,
         'client' : client,
+        'photo' : photo,
     }
     return render(request, "client/dashboard.html", context)
 
@@ -240,12 +241,14 @@ def facture(request):
 
 @never_cache
 @login_required(login_url='login')
-def profil(request):
+def profil(request, id):
+    cl = Client.objects.get(user_id=id)
     locale.setlocale(locale.LC_TIME, 'french')
     now = date.today()
     date_now = now.strftime('%A %d %B %Y')
     context = {
-        'date_now' : date_now
+        'date_now' : date_now,
+        'cl' : cl,
     }
     return render(request, "client/profil.html", context)
 

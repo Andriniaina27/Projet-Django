@@ -14,11 +14,15 @@
         <nav>
             <div class="contenu">
                 <div class="nom">
-                    <!-- <img src="public/image/206836265.jpg" alt=""> -->
-                    <i class="fa fa-user"></i> 
                     {% if user.is_authenticated%}
+                        {%if user.id == photo.user_id%}
+                            {%if photo.photo%}
+                                <img src="{{photo.photo.url}}" alt="">
+                            {%else%}
+                                <i class="fa fa-user"></i> 
+                            {%endif%}
+                        {%endif%}
                         <p>{{user.username}} {{user.first_name}}</p>
-                    {% endif %}
                 </div>
                 <div class="date"><p>{{date_now}}</p></div>
             </div>
@@ -26,8 +30,9 @@
                 <div class="link" id="navlink">
                     <a href="{%url 'home'%}" class="nav-item">Accueil</a>
                     <a href="{%url 'facture'%}" class="nav-item">Vos facture</a>
-                    <a href="{%url 'profil'%}" class="nav-item">Profil</a>
+                    <a href="profil/{{user.id}}" class="nav-item">Profil</a>
                     <a href="{%url 'logout'%}" class="nav-item">Se déconnecter</a>
+                    {% endif %}
                 </div>
                 <div class="fa fa-bars" id="menu-bar"></div>
             </div>
