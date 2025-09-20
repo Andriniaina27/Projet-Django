@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'gestion/public/sass/style.css' %}">
     <link rel="stylesheet" href="{% static 'gestion/public/fontawesome-free-5.15.4-web/css/all.min.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title> {% block title %} {% endblock %} </title>
 </head>
 <body>
@@ -46,4 +47,34 @@
 </body>
 <script src="{% static 'gestion/public/js/script.js' %}"></script>
 <script src="{% static 'gestion/public/js/button.js' %}"></script>
+<script>
+        const ctx = document.getElementById('abonnementsChart').getContext('2d');
+        const abonnementsChart = new Chart(ctx, {
+            type: 'line', // Tu peux changer en 'bar'
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Nombre d’abonnements',
+                    data: {{ valeurs|safe }},
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: 'Évolution des abonnements par mois'
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
 </html>

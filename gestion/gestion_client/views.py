@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 import locale
 from .models import Forfait, TypeForfait, Client, Abonnement, User
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
 
 
 def connexion(request):
@@ -81,10 +83,22 @@ def dashboard(request):
     date_now = now.strftime('%A %d %B %Y')
     countForfait = Forfait.objects.count()
     countClient = Client.objects.count()
+    countAbonnement = Abonnement.objects.count()
+    data = (
+        Abonnement.objects.annotate(mois=TruncMonth("date_debut"))
+        .values("mois")
+        .annotate(total=Count("id"))
+        .order_by("mois")
+    )
+    labels = [d["mois"].strftime("%B %Y") for d in data]  # ex: "Janvier 2025"
+    valeurs = [d["total"] for d in data]
     context = {
         'date_now' : date_now,
         'countForfait' : countForfait,
         'countClient' : countClient,
+        'countAbonnement' : countAbonnement,
+        "labels": labels,
+        "valeurs": valeurs,
     }
     return render(request, 'admin_gestion/dashboard.html', context)
 
