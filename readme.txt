@@ -2,6 +2,17 @@ Nom complet : RANAIVO Andriniaina Luca
 Classe      : IG FI A
 Matricule   : 2997/23
 
+Informations superuser : 
+Username     : Administrateur
+Mot de passe : luca2710
+
+Exemple d'information client : 
+Nom complet : Andriniaina Luca
+login :
+ - Username     : Andriniaina
+ - Mot de passe : luca
+
+
 Abonnement360
 (Gestion des clients et abonnements de forfaits télécom)
 Objectif du projet :

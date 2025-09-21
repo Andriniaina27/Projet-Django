@@ -41,7 +41,7 @@ def inscription(request):
         password = request.POST['password'].strip()
         conf_password = request.POST['conf_password'].strip()
 
-        if not nom or not prenom or not email or not tel or not datenais or not cin or not password or not conf_password:
+        if not nom or not email or not tel or not datenais or not cin or not password or not conf_password:
             messages.error(request, "Veuillez remplir les champs vides")
             redirect('register')
         if password != conf_password:
@@ -315,8 +315,8 @@ def profil(request, id):
         img = request.FILES.get('photo')
 
         if not nom or not prenom or not mail or not tel or not dateN or not cin:
-            messages.error(request, "Veuillez remplir les champs vides")
-            return redirect('profil')
+            messages.error(request, "Veuillez remplir les champs vides. Retounez dans la page profil")
+            return redirect('home')
         
         user.username = nom
         user.first_name = prenom

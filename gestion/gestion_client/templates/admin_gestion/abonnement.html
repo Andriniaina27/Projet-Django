@@ -11,6 +11,10 @@
         <div class="titre">
             <h3>Liste des Abonnements</h3>
         </div>
+        <div class="indice" style="padding: 1rem 2rem; display: flex; align-items: center;">
+            <div title="Expiré" style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>  <p style="margin:0 .5rem"> : Expiré  |</p>
+            <div title="Expiré" style="width: 20px; height: 20px; background-color: rgb(0, 255, 13); border-radius: 50%;"></div>  <p style="margin:0 .5rem"> : En cours</p>
+        </div>
         <div class="container">
             <div class="table">
                 <table>
@@ -19,6 +23,7 @@
                         <th>Nom Forfait</th>
                         <th>Prix</th>
                         <th>Devise</th>
+                        <th>Date fin</th>
                         <th>Status</th>
                     </thead>
                     <tbody>
@@ -37,6 +42,7 @@
                                 </td>
                                 <td>{{ab.forfait.prix}}</td>
                                 <td>Ariary</td>
+                                <td>{{ab.date_fin}}</td>
                                 <td>
                                     {% if ab.date_fin < aujourd_hui %}
                                         <div title="Expiré" style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>
